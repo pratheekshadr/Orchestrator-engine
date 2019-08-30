@@ -1,0 +1,40 @@
+
+Create load balancer:
+	create target groups : acts, users edit target
+	create load balancer :
+				- edit rules 
+				-- path /api/v1/users*  forward to users
+				   all other requests to acts
+
+In users instance:
+	sudo docker start users
+	sudo docker ps                --check if its running in 80->80
+	
+In acts instance:
+	1. Delete all images and containers related to acts
+
+	sudo docker container rm $(sudo docker ps -aq)
+	sudo docker rmi -f acts
+	
+	2. Add dns to app.py
+	cd project/acts
+	vim app.py  --add dns
+
+	3. Create image
+
+	sudo docker build --tag=acts .
+
+	4. create container names acts0 by sharing file db.json
+
+	sudo docker run --name acts0 -d -v path_to_the_file_you_want_to_share:/app/db.json -p 8000:80 acts
+	example:
+	sudo docker run --name acts0 -d -v /home/ubuntu/project/database/db.json:/app/db.json -p 8000:80 acts
+	
+	
+sudo python3 orch_engine.py 
+	
+
+
+
+
+

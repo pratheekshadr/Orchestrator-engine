@@ -1,0 +1,70 @@
+Command to stop running container:
+
+	sudo docker stop container_name/container_id
+	Eg: sudo docker stop acts0
+
+
+Command to remove all stopped containers:
+
+	sudo docker container rm $(sudo docker ps -aq)
+
+Command to remove an image along with the containers made using that image
+
+	sudo docker rmi -f image_name
+	Eg: sudo docker rmi -f acts
+
+Command to build image from DockerFile:
+	sudo docker build --tag=image_name .
+	Eg: sudo docker build --tag=acts .
+	
+Command to create container which shares instance file(attatching volume to the container):
+	instance_file_path  - path of the file in the instance that needs to be shared among containers
+	container_file_path - path of the file inside container which gets all the contents of shared file 
+
+	sudo docker run --name new_container_name -d -v instance_file_path:container_file_path -p 8000:80 acts
+	Eg: sudo docker run --name acts0 -d -v /home/ubuntu/project/database/db.json:/app/db.json -p 8000:80 acts
+
+Command to get into the container:
+	sudo docker exec -it container_name/id  /bin/bash
+	Eg: sudo docker exec -it acts0  /bin/bash
+
+
+Curl commands:
+
+curl --header "Content-Type: application/json" --request GEThttp://instance_ip:port_on_which_container_is_running/api/v1/categories
+
+Add new category:
+curl --header "Content-Type: application/json" --request POST --data '["Others"]' http://3.83.112.61:8000/api/v1/categories
+
+
+List category names and number of acts in it:
+curl --header "Content-Type: application/json" --request GET  http://3.82.94.62:8000/api/v1/categories
+
+
+Total number of acts:
+curl --header "Content-Type: application/json" --request GET  http://3.82.94.62:8000/api/v1/count
+
+
+List number of acts in a given category:
+curl --header "Content-Type: application/json" --request GET  http://3.82.94.62:8000/api/v1/categories/Others/acts/size
+
+
+DELETE an act given actId:
+curl --header "Content-Type: application/json" --request DELETE  http://3.82.94.62:8000/api/v1/acts/1556438598659
+
+
+Users:
+
+curl -v --request DELETE  http://application_load_balancer_DNS/api/v1/users/Chutki
+ 
+Add new user:
+Use UI to give password
+
+Get users:
+curl --header "Content-Type: application/json" --request GET  http://Project-312796716.us-east-1.elb.amazonaws.com/api/v1/users
+
+DELETE user:
+curl -v --request DELETE  http://Project-312796716.us-east-1.elb.amazonaws.com/api/v1/users/Chutki
+
+
+
