@@ -23,10 +23,10 @@ The following functionalities are implemted using REST APIs:
       The replacement container must listen on the same port that the unhealthy container was listening on.
    4. Increase the number of Acts containers if the network load increases above a certain threshold(AUTO SCALING).
        At every 2 minute interval, depending on how many requests were received, the orchestrator must increase or decrease the number of Acts containers:
-            a. If the number of requests is less than 20, then only 1 Acts container must be running.
-            b. If the number is >= 20 and < 40, then 2 Acts containers must be running.
-            c. If the number is >= 40 and < 60, then 3 Acts containers must be running.
-            d. and so on...
+        a. If the number of requests is less than 20, then only 1 Acts container must be running.
+        b. If the number is >= 20 and < 40, then 2 Acts containers must be running.
+        c. If the number is >= 40 and < 60, then 3 Acts containers must be running.
+        d. and so on...
             
 The orchestrator engine will run inside the Acts EC2 instance, listen on port 80 of the public IP, and load balance all HTTP incoming requests equally to every Acts container.
 When first request comes to the orchestrator, it creates and starts two background threads,
